@@ -1,0 +1,10 @@
+planet
+forest
+garden
+river
+cabin
+rocket
+window
+signal
+puzzle
+castle

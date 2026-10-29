@@ -1,0 +1,10 @@
+cat
+dog
+bird
+fish
+sun
+rain
+book
+star
+leaf
+tree
