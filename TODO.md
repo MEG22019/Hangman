@@ -94,20 +94,20 @@ The web browser client is not required to complete this phase.
 
 ### Tasks
 
-- [ ] Create `static/index.html`.
-- [ ] Create `static/style.css`.
-- [ ] Create `static/app.js`.
-- [ ] Add a difficulty selector.
-- [ ] Add a New Game button.
-- [ ] Display the masked word to the player.
-- [ ] Display guessed and incorrect letters.
-- [ ] Display remaining wrong-guess count.
-- [ ] Use `fetch()` to call the Flask API.
-- [ ] Add a keyboard or clickable letter input for guesses.
-- [ ] Disable already-guessed letters in the UI.
-- [ ] Display win/loss outcomes to the user.
-- [ ] Provide a restart/new-game flow.
-- [ ] Make the interface usable on common desktop and mobile sizes.
+- [x] Create `static/index.html`.
+- [x] Create `static/style.css`.
+- [x] Create `static/app.js`.
+- [x] Add a difficulty selector.
+- [x] Add a New Game button.
+- [x] Display the masked word to the player.
+- [x] Display guessed and incorrect letters.
+- [x] Display remaining wrong-guess count.
+- [x] Use `fetch()` to call the Flask API.
+- [x] Add a keyboard or clickable letter input for guesses.
+- [x] Disable already-guessed letters in the UI.
+- [x] Display win/loss outcomes to the user.
+- [x] Provide a restart/new-game flow.
+- [x] Make the interface usable on common desktop and mobile sizes.
 
 ### Completion Criteria
 
@@ -121,12 +121,12 @@ The UI reflects the server-authoritative state after every guess.
 
 ### Tasks
 
-- [ ] Run the unit tests for the game engine.
-- [ ] Run the API tests for the REST server.
-- [ ] Verify valid game states and error conditions.
-- [ ] Check that the hidden word remains protected during play.
-- [ ] Fix bugs discovered during testing.
-- [ ] Confirm that the browser client works against the API in a local browser session.
+- [x] Run the unit tests for the game engine.
+- [x] Run the API tests for the REST server.
+- [x] Verify valid game states and error conditions.
+- [x] Check that the hidden word remains protected during play.
+- [x] Fix bugs discovered during testing.
+- [x] Confirm that the browser client works against the API in a local browser session.
 
 ### Completion Criteria
 

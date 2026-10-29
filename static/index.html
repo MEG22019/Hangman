@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hangman</title>
+    <link rel="stylesheet" href="/static/style.css" />
+  </head>
+  <body>
+    <main class="app">
+      <header class="topbar">
+        <h1>Hangman</h1>
+        <div class="controls">
+          <label for="difficulty">Difficulty</label>
+          <select id="difficulty">
+            <option value="easy">Easy</option>
+            <option value="medium" selected>Medium</option>
+            <option value="hard">Hard</option>
+          </select>
+          <button id="new-game-btn" type="button">New Game</button>
+        </div>
+      </header>
+
+      <section class="game-area">
+        <div class="hangman-panel">
+          <canvas id="hangman-canvas" width="220" height="260" aria-label="Hangman drawing"></canvas>
+        </div>
+
+        <div class="game-panel">
+          <div class="status-row">
+            <p><strong>Status:</strong> <span id="status-text">Waiting</span></p>
+            <p><strong>Remaining:</strong> <span id="remaining-guesses">6</span></p>
+          </div>
+
+          <div class="word-block">
+            <h2>Masked Word</h2>
+            <div id="pattern" class="pattern">_ _ _ _ _</div>
+          </div>
+
+          <div class="info-grid">
+            <div>
+              <h3>Guessed Letters</h3>
+              <div id="guessed-letters" class="pill-list">-</div>
+            </div>
+            <div>
+              <h3>Incorrect Letters</h3>
+              <div id="incorrect-letters" class="pill-list">-</div>
+            </div>
+          </div>
+
+          <div class="message-box">
+            <p id="message">Choose a difficulty and start a game.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="keyboard-panel">
+        <div id="keyboard" class="keyboard" aria-label="Letter keyboard"></div>
+      </section>
+    </main>
+
+    <script src="/static/app.js"></script>
+  </body>
+</html>

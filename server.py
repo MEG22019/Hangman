@@ -2,9 +2,10 @@
 
 from __future__ import annotations
 
+from pathlib import Path
 from uuid import uuid4
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 
 from game import HangmanGame
 from word_manager import VALID_DIFFICULTIES, WordManager
@@ -15,6 +16,10 @@ def create_app(word_manager: WordManager | None = None) -> Flask:
     app.config["JSON_SORT_KEYS"] = False
     manager = word_manager or WordManager()
     games: dict[str, HangmanGame] = {}
+
+    @app.route("/")
+    def index():
+        return send_file(Path(__file__).resolve().parent / "static" / "index.html")
 
     @app.route("/api/games", methods=["POST"])
     def create_game():

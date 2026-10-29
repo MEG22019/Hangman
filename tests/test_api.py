@@ -109,3 +109,56 @@ def test_game_reveals_word_only_after_game_ends(client):
         final_state = fixed_client.get(f"/api/games/{game_id}").get_json()
         assert final_state["status"] == "lost"
         assert final_state["word"] == "cat"
+
+
+def test_each_difficulty_creates_game_successfully(client):
+    for difficulty in ["easy", "medium", "hard"]:
+        response = client.post("/api/games", json={"difficulty": difficulty})
+        assert response.status_code == 201
+        payload = response.get_json()
+        assert payload["status"] == "playing"
+        assert payload["remaining_guesses"] == 6
+
+
+def test_correct_and_incorrect_guesses_update_state(client):
+    response = client.post("/api/games", json={"difficulty": "easy"})
+    game_id = response.get_json()["game_id"]
+
+    correct = client.post(f"/api/games/{game_id}/guess", json={"letter": "a"})
+    payload = correct.get_json()
+    assert correct.status_code == 200
+    assert payload["status"] in {"playing", "won"}
+    assert "a" in payload["guessed_letters"]
+
+    incorrect = client.post(f"/api/games/{game_id}/guess", json={"letter": "x"})
+    payload = incorrect.get_json()
+    assert incorrect.status_code == 200
+    assert payload["status"] in {"playing", "won", "lost"}
+    assert "x" in payload["incorrect_letters"]
+    assert payload["remaining_guesses"] == 5
+
+
+def test_invalid_json_and_missing_body_are_rejected(client):
+    response = client.post("/api/games", data="not-json", content_type="application/json")
+    assert response.status_code == 400
+
+    create_response = client.post("/api/games", json={"difficulty": "easy"})
+    game_id = create_response.get_json()["game_id"]
+
+    response = client.post(f"/api/games/{game_id}/guess", data="[]", content_type="application/json")
+    assert response.status_code == 400
+
+
+def test_game_can_be_restarted_after_ending_previous_one(client):
+    create_response = client.post("/api/games", json={"difficulty": "easy"})
+    first_game_id = create_response.get_json()["game_id"]
+
+    for letter in ["x", "y", "z", "q", "m", "n"]:
+        client.post(f"/api/games/{first_game_id}/guess", json={"letter": letter})
+
+    second_response = client.post("/api/games", json={"difficulty": "medium"})
+    assert second_response.status_code == 201
+    second_payload = second_response.get_json()
+    assert second_payload["status"] == "playing"
+    assert second_payload["remaining_guesses"] == 6
+    assert second_payload["game_id"] != first_game_id
