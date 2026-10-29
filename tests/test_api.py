@@ -120,22 +120,29 @@ def test_each_difficulty_creates_game_successfully(client):
         assert payload["remaining_guesses"] == 6
 
 
-def test_correct_and_incorrect_guesses_update_state(client):
-    response = client.post("/api/games", json={"difficulty": "easy"})
-    game_id = response.get_json()["game_id"]
+def test_correct_and_incorrect_guesses_update_state():
+    class FixedWordManager:
+        def choose_word(self, difficulty):
+            return "cat"
 
-    correct = client.post(f"/api/games/{game_id}/guess", json={"letter": "a"})
-    payload = correct.get_json()
-    assert correct.status_code == 200
-    assert payload["status"] in {"playing", "won"}
-    assert "a" in payload["guessed_letters"]
+    app = create_app(FixedWordManager())
+    app.config["TESTING"] = True
+    with app.test_client() as fixed_client:
+        response = fixed_client.post("/api/games", json={"difficulty": "easy"})
+        game_id = response.get_json()["game_id"]
 
-    incorrect = client.post(f"/api/games/{game_id}/guess", json={"letter": "x"})
-    payload = incorrect.get_json()
-    assert incorrect.status_code == 200
-    assert payload["status"] in {"playing", "won", "lost"}
-    assert "x" in payload["incorrect_letters"]
-    assert payload["remaining_guesses"] == 5
+        correct = fixed_client.post(f"/api/games/{game_id}/guess", json={"letter": "c"})
+        payload = correct.get_json()
+        assert correct.status_code == 200
+        assert payload["status"] in {"playing", "won"}
+        assert "c" in payload["guessed_letters"]
+
+        incorrect = fixed_client.post(f"/api/games/{game_id}/guess", json={"letter": "x"})
+        payload = incorrect.get_json()
+        assert incorrect.status_code == 200
+        assert payload["status"] in {"playing", "won", "lost"}
+        assert "x" in payload["incorrect_letters"]
+        assert payload["remaining_guesses"] == 5
 
 
 def test_invalid_json_and_missing_body_are_rejected(client):
