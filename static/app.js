@@ -107,26 +107,35 @@ function drawHangman(mistakes) {
   }
 }
 
-function renderState(state) {
-  currentState = state;
-  patternEl.textContent = state.pattern;
-  statusTextEl.textContent = state.status;
-  remainingGuessesEl.textContent = state.remaining_guesses;
-  guessedLettersEl.innerHTML = formatList(state.guessed_letters);
-  incorrectLettersEl.innerHTML = formatList(state.incorrect_letters);
+function normalizeState(state) {
+  return {
+    ...state,
+    guessed_letters: Array.isArray(state.guessed_letters) ? state.guessed_letters : [],
+    incorrect_letters: Array.isArray(state.incorrect_letters) ? state.incorrect_letters : []
+  };
+}
 
-  const mistakes = 6 - state.remaining_guesses;
+function renderState(state) {
+  const normalizedState = normalizeState(state);
+  currentState = normalizedState;
+  patternEl.textContent = normalizedState.pattern;
+  statusTextEl.textContent = normalizedState.status;
+  remainingGuessesEl.textContent = normalizedState.remaining_guesses;
+  guessedLettersEl.innerHTML = formatList(normalizedState.guessed_letters);
+  incorrectLettersEl.innerHTML = formatList(normalizedState.incorrect_letters);
+
+  const mistakes = 6 - normalizedState.remaining_guesses;
   drawHangman(mistakes);
 
-  if (state.status === 'playing') {
+  if (normalizedState.status === 'playing') {
     setMessage('Make your next guess.');
-  } else if (state.status === 'won') {
-    setMessage(`You won! The word was "${state.word}".`);
-  } else if (state.status === 'lost') {
-    setMessage(`You lost. The word was "${state.word}".`);
+  } else if (normalizedState.status === 'won') {
+    setMessage(`You won! The word was "${normalizedState.word}".`);
+  } else if (normalizedState.status === 'lost') {
+    setMessage(`You lost. The word was "${normalizedState.word}".`);
   }
 
-  updateKeyboard(state);
+  updateKeyboard(normalizedState);
 }
 
 async function startNewGame() {
