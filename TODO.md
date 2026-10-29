@@ -67,20 +67,20 @@ Invalid difficulty inputs are rejected with a clear error.
 
 ### Tasks
 
-- [ ] Create `server.py`.
-- [ ] Configure Flask.
-- [ ] Maintain in-memory storage for active games.
-- [ ] Generate unique game IDs.
-- [ ] Implement `POST /api/games` to start a new game.
-- [ ] Implement `GET /api/games/<game_id>` to fetch the current game state.
-- [ ] Implement `POST /api/games/<game_id>/guess` to submit a letter.
-- [ ] Validate difficulty input.
-- [ ] Validate guess input.
-- [ ] Return consistent JSON responses.
-- [ ] Return correct HTTP status codes for success and errors.
-- [ ] Handle unknown game IDs and malformed requests.
-- [ ] Ensure the hidden word is not leaked while a game is in progress.
-- [ ] Add API tests for the main request flows.
+- [x] Create `server.py`.
+- [x] Configure Flask.
+- [x] Maintain in-memory storage for active games.
+- [x] Generate unique game IDs.
+- [x] Implement `POST /api/games` to start a new game.
+- [x] Implement `GET /api/games/<game_id>` to fetch the current game state.
+- [x] Implement `POST /api/games/<game_id>/guess` to submit a letter.
+- [x] Validate difficulty input.
+- [x] Validate guess input.
+- [x] Return consistent JSON responses.
+- [x] Return correct HTTP status codes for success and errors.
+- [x] Handle unknown game IDs and malformed requests.
+- [x] Ensure the hidden word is not leaked while a game is in progress.
+- [x] Add API tests for the main request flows.
 
 ### Completion Criteria
 
