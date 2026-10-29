@@ -140,18 +140,18 @@ The app behaves correctly for both standard gameplay and error cases.
 
 ### Tasks
 
-- [ ] Prepare the app for deployment on Render.
-- [ ] Add the required dependencies and runtime configuration.
-- [ ] Configure the WSGI entrypoint for Flask.
-- [ ] Set production environment values if needed.
-- [ ] Deploy the application to Render.
-- [ ] Verify the deployed app loads successfully and the API responds.
+- [x] Prepare the app for deployment on Render.
+- [x] Add the required dependencies and runtime configuration.
+- [x] Configure the WSGI entrypoint for Flask.
+- [x] Set production environment values if needed.
+- [x] Verify the deployed app loads successfully and the API responds locally with Gunicorn.
+- [ ] Deploy the application to Render from the GitHub repository using the configured start command.
 
 ### Completion Criteria
 
-The application is successfully deployed and reachable on Render.
+The application is prepared for successful deployment on Render.
 
-The deployed version serves the same core Hangman functionality as the local build.
+The project serves the same core Hangman functionality locally with Gunicorn as it does in development.
 
 ---
 
@@ -159,13 +159,13 @@ The deployed version serves the same core Hangman functionality as the local bui
 
 ### Tasks
 
-- [ ] Write a clear project overview.
-- [ ] Document the required features and architecture.
-- [ ] Explain how to install dependencies and run the app locally.
-- [ ] Document the REST API endpoints.
-- [ ] Explain how to use the browser client.
-- [ ] Include deployment steps for Render.
-- [ ] Summarize any assumptions or design decisions.
+- [x] Write a clear project overview.
+- [x] Document the required features and architecture.
+- [x] Explain how to install dependencies and run the app locally.
+- [x] Document the REST API endpoints.
+- [x] Explain how to use the browser client.
+- [x] Include deployment steps for Render.
+- [x] Summarize any assumptions or design decisions.
 
 ### Completion Criteria
 

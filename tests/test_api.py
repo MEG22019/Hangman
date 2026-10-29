@@ -74,18 +74,24 @@ def test_guess_rejects_invalid_payloads(client):
     assert response.status_code == 400
 
 
-def test_guess_rejects_after_game_ends(client):
-    create_response = client.post("/api/games", json={"difficulty": "easy"})
-    game_id = create_response.get_json()["game_id"]
+def test_guess_rejects_after_game_ends():
+    class FixedWordManager:
+        def choose_word(self, difficulty):
+            return "cat"
 
-    # Force a lost game by guessing incorrectly six times.
-    for letter in ["x", "y", "z", "q", "m", "n"]:
-        client.post(f"/api/games/{game_id}/guess", json={"letter": letter})
+    app = create_app(FixedWordManager())
+    app.config["TESTING"] = True
+    with app.test_client() as fixed_client:
+        create_response = fixed_client.post("/api/games", json={"difficulty": "easy"})
+        game_id = create_response.get_json()["game_id"]
 
-    response = client.post(f"/api/games/{game_id}/guess", json={"letter": "a"})
+        for letter in ["x", "y", "z", "q", "m", "n"]:
+            fixed_client.post(f"/api/games/{game_id}/guess", json={"letter": letter})
 
-    assert response.status_code == 409
-    assert "ended" in response.get_json()["error"].lower()
+        response = fixed_client.post(f"/api/games/{game_id}/guess", json={"letter": "a"})
+
+        assert response.status_code == 409
+        assert "ended" in response.get_json()["error"].lower()
 
 
 def test_game_reveals_word_only_after_game_ends(client):
